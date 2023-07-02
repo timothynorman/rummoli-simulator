@@ -1,8 +1,11 @@
+import java.util.ArrayList;
+
 public class Player {
 
     public String name;
     public int tokenCount = 0;
     public boolean isEliminated = false;
+    public ArrayList<String> hand = new ArrayList<>();
 
     public String getName() {
         return name;
