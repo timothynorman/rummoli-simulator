@@ -1,13 +1,9 @@
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Random;
 
 public class Round {
-    public int roundNumber;
+    private int roundNumber;
 
-    public ArrayList<String> activePlayers = new ArrayList<>();
-    private Random random = new Random();
+    private ArrayList<Player> activePlayers;
 
     public int getRoundNumber() {
         return roundNumber;
@@ -17,11 +13,27 @@ public class Round {
         this.roundNumber = roundNumber;
     }
 
-    public void dealHands(){
-        // TODO Code to assign random cards to each active player
-        Deck deck = new Deck();
-        System.out.println(deck.getShuffledDeck());
+    public ArrayList<Player> getActivePlayers() {
+        return activePlayers;
     }
 
+    public void setActivePlayers(ArrayList<Player> activePlayers) {
+        this.activePlayers = activePlayers;
+    }
 
+    public void dealHands(){
+        Deck deck = new Deck();
+        ArrayList<String> shuffledDeck = deck.getShuffledDeck();
+
+        int i = 0;
+        int player = 0;
+        while(i < shuffledDeck.size()){
+            activePlayers.get(player).hand.add(shuffledDeck.get(i));
+            i++;
+            player++;
+            if (player > activePlayers.size()-1){
+                player = 0;
+            }
+        }
+    }
 }

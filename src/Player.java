@@ -2,6 +2,11 @@ import java.util.ArrayList;
 
 public class Player {
 
+    public Player(){}
+    public Player(String name){
+        this.name = name;
+    }
+
     public String name;
     public int tokenCount = 0;
     public boolean isEliminated = false;
