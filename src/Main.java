@@ -32,14 +32,14 @@ public class Main {
 //        System.out.printf("Starting Player: %s %n", one.chooseStartingPlayer());
 //        System.out.printf("Starting card: %s %n", one.startingCard());
 
-        System.out.println(one.startingCard(player1));
-        System.out.println(one.startingCard(player2));
-        System.out.println(one.startingCard(player3));
+//        System.out.println(one.startingCard(player1));
+//        System.out.println(one.startingCard(player2));
+//        System.out.println(one.startingCard(player3));
 
         one.playRound();
-        System.out.printf("%s %s %n", player1.getName(), player1.hand);
-        System.out.printf("%s %s %n", player2.getName(), player2.hand);
-        System.out.printf("%s %s %n", player3.getName(), player3.hand);
+//        System.out.printf("%s %s %n", player1.getName(), player1.hand);
+//        System.out.printf("%s %s %n", player2.getName(), player2.hand);
+//        System.out.printf("%s %s %n", player3.getName(), player3.hand);
 
     }
 }

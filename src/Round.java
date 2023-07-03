@@ -3,12 +3,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import static java.util.Collections.binarySearch;
 
 public class Round {
     private int roundNumber;
 
     private ArrayList<Player> activePlayers;
+    Player ghost = new Player("GhostHand");
     private Player currentPlayer;
     Random random = new Random();
 
@@ -28,25 +28,27 @@ public class Round {
         this.activePlayers = activePlayers;
     }
 
+    /**
+     * Randomly deals all cards in a deck (minus Jokers) to all active players.
+     * Depending on number of players, some may have one more card than others.
+     */
     public void dealHands(){
         Deck deck = new Deck();
         ArrayList<String> shuffledDeck = deck.getShuffledDeck();
+        ArrayList<Player> playersAndGhost = new ArrayList<>(activePlayers);
+        playersAndGhost.add(ghost);
 
         int i = 0;
         int player = 0;
         while(i < shuffledDeck.size()){
-            activePlayers.get(player).hand.add(shuffledDeck.get(i));
+            playersAndGhost.get(player).hand.add(shuffledDeck.get(i));
             i++;
             player++;
-            if (player > activePlayers.size()-1){
+            // Return next card to first player if last player was just dealt.
+            if (player > playersAndGhost.size()-1){
                 player = 0;
             }
         }
-    }
-
-    private String chooseFirstCard(){
-        Deck deck = new Deck();
-        return deck.getRandomCard();
     }
 
     /**
@@ -64,22 +66,25 @@ public class Round {
      * @param player The players whose hand is being played.
      * @return The lowest value card in the player's hand as a string in the format 'Value Suit'.
      */
-    public String startingCard(Player player){
-//        ArrayList<String> startingPlayerHand = activePlayers.get(chooseStartingPlayer()).hand;
-//        System.out.println(startingPlayerHand);
-        int playerPosition = activePlayers.indexOf(player);
-        ArrayList<String> startingPlayerHand = activePlayers.get(playerPosition).hand;
+    public String lowestCard(Player player){
+        String[] values = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
 
-        for (int i = 2; i <= 10; i++){
-            for(int j = 0; j < startingPlayerHand.size(); j++){
-                if (startingPlayerHand.get(j).startsWith(String.valueOf(i))){
-                    return startingPlayerHand.get(j);
+        for (String v : values){
+            for (String s : player.hand) {
+                if (s.startsWith(v)) {
+                    return s;
                 }
             }
         }
         return null;
     }
 
+    /**
+     * Determines the next card in the sequence based on the card just played.
+     * Cards are played from 2 -> Ace in a single suit.
+     * @param currentCard The card currently played as a String.
+     * @return The next card in the sequence in the format 'Value Suit' as a String.
+     */
     public String nextCard(String currentCard){
         String[] values = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace", "End"};
         List<String> valueTable = Arrays.asList(values);
@@ -126,20 +131,24 @@ public class Round {
         return true;
     }
 
+    /**
+     * Plays one round. Round ends when a player's hand is empty.
+     * Rules of Rummoli as per: <a href="https://en.wikipedia.org/wiki/Rummoli#Play">...</a>
+     */
     public void playRound(){
-        String card = startingCard(chooseStartingPlayer());
+        String card = lowestCard(chooseStartingPlayer());
 
         while(continueRound()){
-            if(card.equals("End")){
-                card = startingCard(currentPlayer);
+            if(ghost.hand.contains(card)){
+                card = lowestCard(currentPlayer);
+            }
+            else if(card.equals("End")){
+                card = lowestCard(currentPlayer);
             }
             else{
                 playCard(card);
                 card = nextCard(card);
             }
         }
-
-
     }
-
 }
