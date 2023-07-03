@@ -9,6 +9,7 @@ public class Round {
     private int roundNumber;
 
     private ArrayList<Player> activePlayers;
+    private Player currentPlayer;
     Random random = new Random();
 
     public int getRoundNumber() {
@@ -105,6 +106,7 @@ public class Round {
         for(Player player : activePlayers){
             if(player.hand.contains(card)){
                 System.out.printf("%s plays %s %n", player.getName(), card);
+                currentPlayer = player;
                 player.hand.remove(card);
             }
         }
@@ -129,7 +131,7 @@ public class Round {
 
         while(continueRound()){
             if(card.equals("End")){
-                card = startingCard(chooseStartingPlayer());
+                card = startingCard(currentPlayer);
             }
             else{
                 playCard(card);
