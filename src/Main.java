@@ -18,5 +18,7 @@ public class Main {
         System.out.println(player1.hand);
         System.out.println(player2.hand);
         System.out.println(player3.hand);
+
+        System.out.println(one.chooseStartingCard());
     }
 }

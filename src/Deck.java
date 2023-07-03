@@ -1,10 +1,13 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class Deck {
 
     public Deck(){
     }
+
+    Random random = new Random();
     private ArrayList<String> makeDeck(){
         ArrayList<String> deck = new ArrayList<>();
         String[] suits = {"Hearts", "Diamonds", "Clubs", "Spades"};
@@ -25,5 +28,10 @@ public class Deck {
 
     public ArrayList<String> getShuffledDeck(){
         return shuffledDeck(makeDeck());
+    }
+
+    public String getRandomCard(){
+        String randomCard = getShuffledDeck().get(random.nextInt(51));
+        return randomCard;
     }
 }

@@ -36,4 +36,9 @@ public class Round {
             }
         }
     }
+
+    public String chooseStartingCard(){
+        Deck deck = new Deck();
+        return deck.getRandomCard();
+    }
 }
