@@ -12,7 +12,7 @@ public class Main {
 
 
         Round one = new Round();
-//        one.setActivePlayers(actives);
+        one.setActivePlayers(actives);
 
 //        one.dealHands();
 
@@ -27,6 +27,16 @@ public class Main {
         Pot aceKingDiamonds = new Pot("Ace and King of Diamonds"); pots.add(aceKingDiamonds);
         Pot sevenEightNine = new Pot("7-8-9 Suited"); pots.add(sevenEightNine);
 
+        for(Pot pot : pots){
+            pot.payIn(actives);
+        }
 
+        one.setPots(pots);
+        one.dealHands();
+        one.playRound();
+
+        for(Player player : actives){
+            System.out.println(player.getCoinCount());
+        }
     }
 }
