@@ -7,9 +7,9 @@ public class Player {
         this.name = name;
     }
 
-    public String name;
-    public int tokenCount = 0;
-    public boolean isEliminated = false;
+    private String name;
+    private int coinCount = 30;
+    private boolean isActive = true;
     public ArrayList<String> hand = new ArrayList<>();
 
     public String getName() {
@@ -20,19 +20,23 @@ public class Player {
         this.name = name;
     }
 
-    public int getTokenCount() {
-        return tokenCount;
+    public int getCoinCount() {
+        return coinCount;
     }
 
-    public void setTokenCount(int tokenCount) {
-        this.tokenCount = tokenCount;
+    public void setCoinCount(int coinCount) {
+        this.coinCount = coinCount;
     }
 
-    public boolean isEliminated() {
-        return isEliminated;
+    public void adjustCoins(int amount){
+        coinCount += amount;
     }
 
-    public void setEliminated(boolean eliminated) {
-        isEliminated = eliminated;
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

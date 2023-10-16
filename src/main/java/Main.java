@@ -14,32 +14,29 @@ public class Main {
         Round one = new Round();
         one.setActivePlayers(actives);
 
+//        one.dealHands();
+
+        ArrayList<Pot> pots = new ArrayList<>();
+        Pot rummoli = new Pot("Rummoli"); pots.add(rummoli);
+        Pot poker = new Pot("Poker"); pots.add(poker);
+        Pot tenSpades = new Pot("10 Spades"); pots.add(tenSpades);
+        Pot jackDiamonds = new Pot("Jack Diamonds"); pots.add(jackDiamonds);
+        Pot queenClubs = new Pot("Queen Clubs"); pots.add(queenClubs);
+        Pot kingHearts = new Pot("King Hearts"); pots.add(kingHearts);
+        Pot aceSpades = new Pot("Ace of Spades"); pots.add(aceSpades);
+        Pot aceKingDiamonds = new Pot("Ace and King of Diamonds"); pots.add(aceKingDiamonds);
+        Pot sevenEightNine = new Pot("7-8-9 Suited"); pots.add(sevenEightNine);
+
+        for(Pot pot : pots){
+            pot.payIn(actives);
+        }
+
+        one.setPots(pots);
         one.dealHands();
-
-//        System.out.printf("%s %s %n", player1.getName(), player1.hand);
-//        System.out.printf("%s %s %n", player2.getName(), player2.hand);
-//        System.out.printf("%s %s %n", player3.getName(), player3.hand);
-
-//        String card = "Ace Spades";
-//        for(Player player : actives){
-//            if (player.hand.contains(card)){
-//                System.out.printf("%s plays %s%n", player.getName(), card);
-//                player.hand.remove(card);
-//                System.out.println(player.hand);
-//            }
-//        }
-
-//        System.out.printf("Starting Player: %s %n", one.chooseStartingPlayer());
-//        System.out.printf("Starting card: %s %n", one.startingCard());
-
-//        System.out.println(one.startingCard(player1));
-//        System.out.println(one.startingCard(player2));
-//        System.out.println(one.startingCard(player3));
-
         one.playRound();
-//        System.out.printf("%s %s %n", player1.getName(), player1.hand);
-//        System.out.printf("%s %s %n", player2.getName(), player2.hand);
-//        System.out.printf("%s %s %n", player3.getName(), player3.hand);
 
+        for(Player player : actives){
+            System.out.printf("%s: %s %n", player.getName(), player.getCoinCount());
+        }
     }
 }
