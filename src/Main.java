@@ -36,7 +36,7 @@ public class Main {
         one.playRound();
 
         for(Player player : actives){
-            System.out.println(player.getCoinCount());
+            System.out.printf("%s: %s %n", player.getName(), player.getCoinCount());
         }
     }
 }

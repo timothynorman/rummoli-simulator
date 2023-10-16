@@ -152,7 +152,7 @@ public class Round {
             System.out.printf("%s wins %d from ACE OF SPADES pot! %n", currentPlayer.getName(), pots.get(6).getCoins());
             pots.get(6).payOut(currentPlayer);
         }
-
+        // TODO: Test for 7-8-9 payout.
     }
 
     /**
