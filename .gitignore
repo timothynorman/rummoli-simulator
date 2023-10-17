@@ -30,3 +30,6 @@ bin/
 ### Mac OS ###
 .DS_Store
 *.iml
+*.lst
+*.class
+/target/classes/

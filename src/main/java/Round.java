@@ -8,6 +8,16 @@ public class Round {
     private int roundNumber;
 
     private ArrayList<Player> activePlayers;
+    private ArrayList<Pot> pots;
+
+    public ArrayList<Pot> getPots() {
+        return pots;
+    }
+
+    public void setPots(ArrayList<Pot> pots) {
+        this.pots = pots;
+    }
+
     Player ghost = new Player("GhostHand");
     private Player currentPlayer;
     Random random = new Random();
@@ -57,6 +67,9 @@ public class Round {
      */
     public Player chooseStartingPlayer(){
         Player startingPlayer = activePlayers.get(random.nextInt(activePlayers.size()));
+        // Payout for "winning" the poker hand.
+        System.out.printf("%s wins %d from the poker hand! %n", startingPlayer.getName(), pots.get(1).getCoins());
+        pots.get(1).payOut(startingPlayer);
         return startingPlayer;
     }
 
@@ -113,8 +126,33 @@ public class Round {
                 System.out.printf("%s plays %s %n", player.getName(), card);
                 currentPlayer = player;
                 player.hand.remove(card);
+                testForPayouts(card);
             }
         }
+    }
+
+    private void testForPayouts(String card) {
+        if(card.equals("10 Spades")){
+            System.out.printf("%s wins %d from 10 Spades pot! %n", currentPlayer.getName(), pots.get(2).getCoins());
+            pots.get(2).payOut(currentPlayer);
+        }
+        if(card.equals("Jack Diamonds")){
+            System.out.printf("%s wins %d from Jack of Diamonds pot! %n", currentPlayer.getName(), pots.get(3).getCoins());
+            pots.get(3).payOut(currentPlayer);
+        }
+        if(card.equals("Queen Clubs")){
+            System.out.printf("%s wins %d from Queen of Clubs pot! %n", currentPlayer.getName(), pots.get(4).getCoins());
+            pots.get(4).payOut(currentPlayer);
+        }
+        if(card.equals("King Hearts")){
+            System.out.printf("%s wins %d from King of Hearts pot! %n", currentPlayer.getName(), pots.get(5).getCoins());
+            pots.get(5).payOut(currentPlayer);
+        }
+        if(card.equals("Ace Spades")){
+            System.out.printf("%s wins %d from ACE OF SPADES pot! %n", currentPlayer.getName(), pots.get(6).getCoins());
+            pots.get(6).payOut(currentPlayer);
+        }
+
     }
 
     /**
@@ -140,6 +178,7 @@ public class Round {
 
         while(continueRound()){
             if(ghost.hand.contains(card)){
+                System.out.printf("* %s is burned * %n", card);
                 card = lowestCard(currentPlayer);
             }
             else if(card.equals("End")){
@@ -150,5 +189,9 @@ public class Round {
                 card = nextCard(card);
             }
         }
+        // Payout for winning the round.
+        System.out.printf("%s wins %d from Rummoli! %n", currentPlayer.getName(), pots.get(0).getCoins());
+        pots.get(0).payOut(currentPlayer);
     }
+
 }
