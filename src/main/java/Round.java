@@ -174,6 +174,12 @@ public class Round {
      * Rules of Rummoli as per: <a href="https://en.wikipedia.org/wiki/Rummoli#Play">...</a>
      */
     public void playRound(){
+        for(Pot pot : pots) {
+            pot.payIn(activePlayers);
+        }
+
+        dealHands();
+
         String card = lowestCard(chooseStartingPlayer());
 
         while(continueRound()){
