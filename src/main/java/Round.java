@@ -8,6 +8,9 @@ public class Round {
     private int roundNumber;
     private ArrayList<Player> activePlayers;
     private ArrayList<Pot> pots;
+    private Player currentPlayer;
+    Player ghost = new Player("GhostHand");
+    Random random = new Random();
 
     public Round(int roundNumber, ArrayList<Player> players){
         this.roundNumber = roundNumber;
@@ -20,9 +23,6 @@ public class Round {
         this.pots = pots;
     }
 
-    Player ghost = new Player("GhostHand");
-    private Player currentPlayer;
-    Random random = new Random();
 
     public void setActivePlayers(ArrayList<Player> activePlayers) {
         this.activePlayers = activePlayers;
