@@ -4,13 +4,45 @@ import java.util.Scanner;
 public class Game {
     Scanner keyboard = new Scanner(System.in);
     ArrayList<Player> players = new ArrayList<>();
+    ArrayList<Pot> pots = new ArrayList<>();
+    int numberOfRoundsToPlay;
 
-    public void setupPlayers() {
+
+    public void setupGame() {
+        promptForNumberOfRounds();
+        setupPlayers();
+        createPots();
+    }
+
+    public void playRounds() {
+
+        int i = 1;
+        while (i <= numberOfRoundsToPlay) {
+            Round round = new Round(i, players);
+            round.setPots(pots);
+            round.playRound();
+
+            System.out.printf("%n *** ROUND %d SUMMARY *** %n", i);
+            for(Player player : players) {
+                System.out.printf("%s: %d %n", player.getName(), player.getCoinCount());
+            }
+
+            for(Pot pot : pots) {
+                System.out.printf("%s: %d %n", pot.getName(), pot.getCoins());
+            }
+            i++;
+        }
+
+    }
+
+    private void promptForNumberOfRounds() {
+        System.out.print("How many rounds of tedium can you stand? ");
+        this.numberOfRoundsToPlay = keyboard.nextInt();
+    }
+
+    private void setupPlayers() {
         int numberOfPlayers = promptForNumberOfPlayers();
         namePlayers(numberOfPlayers);
-
-        System.out.println("The players are: ");
-        players.forEach(player -> System.out.println(player.getName()));
     }
 
     private int promptForNumberOfPlayers() {
@@ -46,33 +78,15 @@ public class Game {
         }
     }
 
-/*
-    Round one = new Round();
-        one.setActivePlayers(actives);
-
-//        one.dealHands();
-
-    ArrayList<Pot> pots = new ArrayList<>();
-    Pot rummoli = new Pot("Rummoli"); pots.add(rummoli);
-    Pot poker = new Pot("Poker"); pots.add(poker);
-    Pot tenSpades = new Pot("10 Spades"); pots.add(tenSpades);
-    Pot jackDiamonds = new Pot("Jack Diamonds"); pots.add(jackDiamonds);
-    Pot queenClubs = new Pot("Queen Clubs"); pots.add(queenClubs);
-    Pot kingHearts = new Pot("King Hearts"); pots.add(kingHearts);
-    Pot aceSpades = new Pot("Ace of Spades"); pots.add(aceSpades);
-    Pot aceKingDiamonds = new Pot("Ace and King of Diamonds"); pots.add(aceKingDiamonds);
-    Pot sevenEightNine = new Pot("7-8-9 Suited"); pots.add(sevenEightNine);
-
-
+    private void createPots() {
+        Pot rummoli = new Pot("Rummoli"); pots.add(rummoli);
+        Pot poker = new Pot("Poker"); pots.add(poker);
+        Pot tenSpades = new Pot("10 Spades"); pots.add(tenSpades);
+        Pot jackDiamonds = new Pot("Jack Diamonds"); pots.add(jackDiamonds);
+        Pot queenClubs = new Pot("Queen Clubs"); pots.add(queenClubs);
+        Pot kingHearts = new Pot("King Hearts"); pots.add(kingHearts);
+        Pot aceSpades = new Pot("Ace of Spades"); pots.add(aceSpades);
+        Pot aceKingDiamonds = new Pot("Ace and King of Diamonds"); pots.add(aceKingDiamonds);
+        Pot sevenEightNine = new Pot("7-8-9 Suited"); pots.add(sevenEightNine);
     }
-
-        one.setPots(pots);
-        one.playRound();
-
-        for(Player player : actives){
-        System.out.println(player.getCoinCount());
-    }
-
-
- */
 }
