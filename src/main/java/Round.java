@@ -6,13 +6,15 @@ import java.util.Random;
 
 public class Round {
     private int roundNumber;
-
     private ArrayList<Player> activePlayers;
     private ArrayList<Pot> pots;
 
-    public ArrayList<Pot> getPots() {
-        return pots;
+    public Round(int roundNumber, ArrayList<Player> players){
+        this.roundNumber = roundNumber;
+        this.activePlayers = players;
     }
+
+    public Round(){}
 
     public void setPots(ArrayList<Pot> pots) {
         this.pots = pots;
@@ -21,18 +23,6 @@ public class Round {
     Player ghost = new Player("GhostHand");
     private Player currentPlayer;
     Random random = new Random();
-
-    public int getRoundNumber() {
-        return roundNumber;
-    }
-
-    public void setRoundNumber(int roundNumber) {
-        this.roundNumber = roundNumber;
-    }
-
-    public ArrayList<Player> getActivePlayers() {
-        return activePlayers;
-    }
 
     public void setActivePlayers(ArrayList<Player> activePlayers) {
         this.activePlayers = activePlayers;
@@ -47,6 +37,11 @@ public class Round {
         ArrayList<String> shuffledDeck = deck.getShuffledDeck();
         ArrayList<Player> playersAndGhost = new ArrayList<>(activePlayers);
         playersAndGhost.add(ghost);
+
+        // Clear any cards from previous hand.
+        for(Player player : playersAndGhost){
+            player.hand.clear();
+        }
 
         int i = 0;
         int player = 0;
@@ -174,6 +169,7 @@ public class Round {
      * Rules of Rummoli as per: <a href="https://en.wikipedia.org/wiki/Rummoli#Play">...</a>
      */
     public void playRound(){
+        printRoundNumber();
         for(Pot pot : pots) {
             pot.payIn(activePlayers);
         }
@@ -198,6 +194,13 @@ public class Round {
         // Payout for winning the round.
         System.out.printf("%s wins %d from Rummoli! %n", currentPlayer.getName(), pots.get(0).getCoins());
         pots.get(0).payOut(currentPlayer);
+    }
+
+    private void printRoundNumber() {
+        System.out.printf("%n " +
+                "================ %n" +
+                "*** ROUND %d *** %n" +
+                "================ %n", roundNumber);
     }
 
 }
